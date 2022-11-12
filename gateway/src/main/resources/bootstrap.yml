@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.56.10:8848
+      config:
+        server-addr: 192.168.56.10:8848
+        namespace: 83dce590-2b45-4fe0-bed1-a58b1be7c2a2
+        group: DEFAULT_GROUP # 默认分组
+    gateway:
+      routes:
+        - id: service_one_route
+          uri: lb://service-one
+          predicates:
+            - Path=/service-one/**
+          filters:
+            - RewritePath=/service-one/(?<segment>.*),/service-one/$\{segment} # 路径重写
+
+        - id: service_two_route
+          uri: lb://service-two # lb负载均衡到服务二
+          predicates:
+            - Path=/service-two/**
+          filters:
+#            - Auth=true
+            - RewritePath=/service-two/(?<segment>.*),/service-two/$\{segment}
+
+server:
+  error:
+    whitelabel:
+      enabled: false # 空白页不展示

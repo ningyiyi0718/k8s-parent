@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: service-two
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.56.10:8848
+      config:
+        server-addr: 192.168.56.10:8848
+        namespace: 83dce590-2b45-4fe0-bed1-a58b1be7c2a2
+        group: DEFAULT_GROUP # 默认分组
+
+ # actuator暴露所有endpoint
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+ # 空白页不展示
+server:
+  error:
+    whitelabel:
+      enabled: false
